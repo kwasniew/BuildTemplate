@@ -176,14 +176,14 @@
 
     <!-- APP -->
     <target name="package" depends="build" description="creates tarball with the application jar and all dependencies jars">
-        <tar destfile="${artifacts}/utterlyidle-setup-${build.number}.tar">
+        <tar destfile="${artifacts}/${ant.project.name}-${build.number}.tar">
             <tarfileset dir="${runtime.dependencies.dir}" />
             <tarfileset dir="${artifacts}">
                 <include name="${release.jar}"/>
             </tarfileset>
         </tar>
         <gzip destfile="${artifacts}/${release.tar}"
-              src="${artifacts}/utterlyidle-setup-${build.number}.tar"/>
+              src="${artifacts}/${ant.project.name}-${build.number}.tar"/>
     </target>
 
     <target name="deploy-app" description="deploys app tarball">
