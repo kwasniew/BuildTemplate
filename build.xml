@@ -199,6 +199,7 @@
         <copy todir="${artifacts}/release-scripts" overwrite="true">
             <fileset dir="${scripts}" />
         </copy>
+        <replace dir="${artifacts}/release-scripts" token="APP_PROPERTIES" value="${app.properties}" />
         <replace dir="${artifacts}/release-scripts" token="MAIN_APP_CLASS" value="${main.class}" />
         <replace dir="${artifacts}/release-scripts" token="STOP_APP_PATTERN" value="${stopAppPattern}"/>
         <tar destfile="${artifacts}/release-scripts.tar">

@@ -38,7 +38,7 @@ if [ "$version" == "false" ] || [ "$port" == "false" ]; then
   exit 1;
 fi
 
-cd $version && nohup java -Xmx500m -Xms500m  -cp $(echo *.jar | tr ' ' ':') MAIN_APP_CLASS $port STOP_APP_PATTERN > log.out 2> log.err < /dev/null &
+cd $version && nohup java -Xmx500m -Xms500m APP_PROPERTIES -cp $(echo *.jar | tr ' ' ':') MAIN_APP_CLASS $port STOP_APP_PATTERN > log.out 2> log.err < /dev/null &
 
 echo currently running version:
 ls -l | grep current
