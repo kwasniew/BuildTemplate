@@ -202,7 +202,7 @@
         <replace dir="${artifacts}/release-scripts" token="APP_PROPERTIES" value="${app.properties}" />
         <replace dir="${artifacts}/release-scripts" token="MAIN_APP_CLASS" value="${main.class}" />
         <replace dir="${artifacts}/release-scripts" token="STOP_APP_PATTERN" value="${stopAppPattern}"/>
-        <replace dir="${artifacts}/release-scripts" token="APP_PORT" value="${app.port}"/>
+        <replace dir="${artifacts}/release-scripts" token="APP_PORT" value="${ssh.port}"/>
         <tar destfile="${artifacts}/release-scripts.tar">
             <tarfileset dir="${artifacts}/release-scripts" />
         </tar>
