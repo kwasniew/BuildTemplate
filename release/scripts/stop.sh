@@ -5,7 +5,7 @@ where:
     -h  display this help message
     -p  port number, if not specified script will stop all passbook applications
 "
-portNumber=0
+portNumber=APP_PORT
 while getopts 'hp:' option; do
   case "$option" in
     h) echo "$usage"

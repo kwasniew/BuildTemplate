@@ -202,6 +202,7 @@
         <replace dir="${artifacts}/release-scripts" token="APP_PROPERTIES" value="${app.properties}" />
         <replace dir="${artifacts}/release-scripts" token="MAIN_APP_CLASS" value="${main.class}" />
         <replace dir="${artifacts}/release-scripts" token="STOP_APP_PATTERN" value="${stopAppPattern}"/>
+        <replace dir="${artifacts}/release-scripts" token="APP_PORT" value="${app.port}"/>
         <tar destfile="${artifacts}/release-scripts.tar">
             <tarfileset dir="${artifacts}/release-scripts" />
         </tar>
@@ -230,16 +231,16 @@
 
     <target name="release" description="releases deployed app">
         <antcall target="extract"/>
-        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./stop.sh; rm previous; ln -s $(readlink current) previous; rm current; ln -s ${build.number} current &amp;&amp; ./start.sh -v current -p ${ssh.port} &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
+        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./stop.sh; rm previous; ln -s $(readlink current) previous; rm current; ln -s ${build.number} current &amp;&amp; ./start.sh &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
     </target>
 
     <target name="rollback" description="rollbacks deployed app">
-        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./rollback.sh -p ${ssh.port} &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
+        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./rollback.sh &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
     </target>
 
     <target name="restart" description="restart deployed app">
         <ssh-command-with-credentials
-                command="cd ${ssh.toDir} &amp;&amp; ./restart.sh -p ${ssh.port} &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
+                command="cd ${ssh.toDir} &amp;&amp; ./restart.sh &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
     </target>
 
     <target name="click" description="one click deployment">

@@ -2,9 +2,9 @@
 usage="$(basename $0) [-hp:] -- script to restart application
 where:
     -h  display this help message
-    -p  port number on which to start the application. The port number must be specified explicitely!
+    -p  port number on which to start the application
 "
-portNumber=0
+portNumber=$APP_PORT
 while getopts 'hp:' option; do
   case "$option" in
     h) echo "$usage"
@@ -19,12 +19,6 @@ while getopts 'hp:' option; do
   esac
 done
 
-if [ "$portNumber" == 0 ]; then
-  echo Option -p required
-  echo "$usage"
-  exit 0
-fi
-
 ./stop.sh
 echo restarting application at port $portNumber
-./start.sh -p $portNumber -v current
+./start.sh -p $portNumber 

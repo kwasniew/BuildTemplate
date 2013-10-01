@@ -3,11 +3,11 @@
 usage="$(basename $0) [-hvp] -- script to run application
 where:
     -h  display this help message
-    -v  application build version (required)
+    -v  application build version 
     -p  port (required)
 "
-version="false"
-port="false"
+version="current"
+port="APP_PORT"
 
 while getopts 'hv:p:' option; do
   case "$option" in
@@ -24,19 +24,6 @@ while getopts 'hv:p:' option; do
        ;;
   esac
 done
-
-if [ "$port" == "false" ]; then
-  echo option -p required
-fi
-
-if [ "$version" == "false" ]; then
-  echo option -v required
-fi
-
-if [ "$version" == "false" ] || [ "$port" == "false" ]; then
-  echo "$usage"
-  exit 1;
-fi
 
 cd $version && nohup java -Xms500m -Xmx500m APP_PROPERTIES -cp $(echo *.jar | tr ' ' ':') MAIN_APP_CLASS $port STOP_APP_PATTERN > log.out 2> log.err < /dev/null &
 
