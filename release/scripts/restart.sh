@@ -4,7 +4,7 @@ where:
     -h  display this help message
     -p  port number on which to start the application
 "
-portNumber=$APP_PORT
+portNumber=APP_PORT
 while getopts 'hp:' option; do
   case "$option" in
     h) echo "$usage"
