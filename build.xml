@@ -205,7 +205,7 @@
 
     <target name="release" description="releases deployed app">
         <antcall target="extract"/>
-        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./stop.sh; rm previous; ln -s $(readlink current) previous; rm current; ln -s ${build.number} current &amp;&amp; ./start.sh &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
+        <ssh-command-with-credentials command="cd ${ssh.toDir} &amp;&amp; ./stop.sh; ln -f -s $(readlink current) previous; ln -f -s ${build.number} current &amp;&amp; ./start.sh &gt; log.out 2&gt; log.err &lt; /dev/null &amp;"/>
     </target>
 
     <target name="rollback" description="rollbacks deployed app">
