@@ -48,31 +48,6 @@
         <path path="${test.jar.path}"/>
     </path>
 
-    <target name="generate-cache-manifest" description="generates cache manifest file">
-        <delete>
-            <fileset dir="${src}" includes="**/*.appcache"/>
-        </delete>
-
-        <copy todir="${src}" includeemptydirs="false">
-            <fileset dir="${src}"/>
-            <mapper type="glob" from="*.appcache.template" to="*.appcache"/>
-        </copy>
-
-        <replace dir="${src}" value="${build.number}">
-            <include name="**/*.appcache"/>
-            <replacetoken>VERSION_PLACEHOLDER</replacetoken>
-        </replace>
-
-        <tstamp>
-            <format property="touch.time" pattern="dd/MM/yyyy HH:mm:ss"/>
-        </tstamp>
-
-        <replace dir="${src}" value="${touch.time}">
-            <include name="**/*.appcache"/>
-            <replacetoken>DATE_PLACEHOLDER</replacetoken>
-        </replace>
-    </target>
-
     <target name="update" description="updates library dependencies">
         <parallel>
             <update dependencies="${build}/dependencies/build.dependencies"
@@ -148,7 +123,6 @@
         <antcall target="compile"/>
         <parallel>
             <antcall target="test"/>
-            <antcall target="generate-cache-manifest"/>
             <!--<antcall target="generate-artifacts"/>-->
         </parallel>
     </target>
