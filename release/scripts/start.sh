@@ -25,7 +25,7 @@ while getopts 'hv:p:' option; do
   esac
 done
 
-cd $version && nohup java -Xms500m -Xmx500m APP_PROPERTIES -cp $(echo *.jar | tr ' ' ':') MAIN_APP_CLASS $port STOP_APP_PATTERN > log.out 2> log.err < /dev/null &
+cd $version && nohup java -Xms500m -Xmx500m APP_PROPERTIES -cp $(echo *.jar | tr ' ' ':') MAIN_APP_CLASS $port STOP_APP_PATTERN >> log.out 2>> log.err < /dev/null &
 
 echo currently running version:
 ls -l | grep current
