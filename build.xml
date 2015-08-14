@@ -35,7 +35,7 @@
     <import file="${macros}/deploy/macros.xml"/>
     <import file="${macros}/dependencies/shavenmaven.xml"/>
 
-    <requires java.version="1\.[67]"/>
+    <requires java.version="1\.[678]"/>
 
     <path id="all.dependancies">
         <fileset dir="${build.dependencies.dir}" includes="**/*.jar"/>
