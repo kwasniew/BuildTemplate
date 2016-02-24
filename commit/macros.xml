@@ -13,6 +13,18 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="jar.dependencies">
+        <attribute name="jar"/>
+        <attribute name="lib"/>
+        <sequential>
+            <jar jarfile="@{jar}">
+                <zipgroupfileset dir="@{lib}">
+                    <include name="**/*.jar"/>
+                </zipgroupfileset>
+            </jar>
+        </sequential>
+    </macrodef>
+
     <macrodef name="compile.and.jar">
         <attribute name="src"/>
         <attribute name="jar"/>
@@ -20,10 +32,13 @@
         <attribute name="version"/>
         <attribute name="classes" default="@{jar}.classes"/>
         <attribute name="main.class" default=""/>
+        <attribute name="fat.deps" default=""/>
 
         <sequential>
             <mkdir dir="@{classes}"/>
-            <javac srcdir="@{src}" destdir="@{classes}" classpathref="@{classpathref}" bootclasspath="${java.home}/lib/rt.jar;${java.home}/lib/jce.jar" target="1.5" source="1.5" debug="true"
+            <javac srcdir="@{src}" destdir="@{classes}" classpathref="@{classpathref}"
+                   bootclasspath="${java.home}/lib/rt.jar;${java.home}/lib/jce.jar" target="1.5" source="1.5"
+                   debug="true"
                    includeantruntime="false"/>
             <copy todir="@{classes}">
                 <fileset dir="@{src}">
@@ -44,7 +59,17 @@
                 <attribute name="Implementation-Vendor" value="${ant.project.name}"/>
             </manifest>
 
-            <jar destfile="@{jar}" basedir="@{classes}" manifest="${manifest}"/>
+            <if>
+                <equals arg1="@{fat.deps}" arg2=""/>
+                <then>
+                    <jar destfile="@{jar}" basedir="@{classes}" manifest="${manifest}"/>
+                </then>
+                <else>
+                    <jar destfile="@{jar}" basedir="@{classes}" manifest="${manifest}">
+                        <zipfileset src="@{fat.deps}" excludes="META-INF/*.SF"/>
+                    </jar>
+                </else>
+            </if>
 
             <delete file="$manifest"/>
             <delete dir="@{classes}"/>
