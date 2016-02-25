@@ -13,9 +13,11 @@
     <property name="release.version" value="${build.number}"/>
     <property name="release.name" value="${ant.project.name}-${release.version}"/>
     <property name="release.jar" value="${release.name}.jar"/>
+    <property name="release.fat.jar" value="${release.name}-fat.jar"/>
     <property name="release.pom" value="${release.name}.pom"/>
     <property name="release.src" value="${release.name}-sources.jar"/>
     <property name="release.jar.path" value="${artifacts}/${release.jar}"/>
+    <property name="release.fat.jar.path" value="${artifacts}/${release.fat.jar}"/>
     <property name="release.tar" value="${release.name}.tar.gz"/>
     <property name="scripts.tar" value="release-scripts.tar.gz"/>
     <property name="test.jar.path" value="${artifacts}/${release.name}.test.jar"/>
@@ -61,20 +63,16 @@
         <delete dir="${artifacts}"/>
     </target>
 
-    <target name="compile">
+    <target name="compile" depends="jar.deps">
         <compile.and.jar src="${src}" jar="${release.jar.path}" classpathref="all.dependancies"
                          version="${release.version}" main.class="${main.class}"/>
+        <compile.and.jar src="${src}" jar="${release.fat.jar.path}" classpathref="all.dependancies"
+                         version="${release.version}" main.class="${main.class}" fat.deps="${artifacts}/dependencies-all.jar"/>
         <compile.and.jar src="${test}" jar="${test.jar.path}" classpathref="all.jars" version="${release.version}"/>
     </target>
 
     <target name="jar.deps">
         <jar.dependencies jar="${artifacts}/dependencies-all.jar" lib="lib" />
-    </target>
-
-    <target name="compile.fat" depends="jar.deps">
-        <compile.and.jar src="${src}" jar="${release.jar.path}" classpathref="all.dependancies"
-                         version="${release.version}" main.class="${main.class}" fat.deps="${artifacts}/dependencies-all.jar"/>
-        <compile.and.jar src="${test}" jar="${test.jar.path}" classpathref="all.jars" version="${release.version}"/>
     </target>
 
     <target name="test">
